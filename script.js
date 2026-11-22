@@ -65,18 +65,69 @@ if(!SITE.reduce) document.querySelectorAll(".tilt").forEach(c=>{
   c.addEventListener("pointerleave",()=>c.style.transform="");
 });
 
-/* Enquiry form: opens the visitor's email app.
-   Enquiries are addressed to gritory.digital@gmail.com.
-   The visitor must send the email from their email app. */
-document.getElementById("form").addEventListener("submit",e=>{
+/* Gritory Digital enquiry form - FormSubmit AJAX */
+const enquiryForm = document.getElementById("form");
+const enquiryStatus = document.getElementById("status");
+const enquiryButton = enquiryForm.querySelector('button[type="submit"]');
+
+/* Hidden honeypot: real visitors leave this empty; basic bots may fill it. */
+const honeypot = document.createElement("input");
+honeypot.type = "text";
+honeypot.name = "_honey";
+honeypot.tabIndex = -1;
+honeypot.autocomplete = "off";
+honeypot.setAttribute("aria-hidden", "true");
+honeypot.style.display = "none";
+enquiryForm.appendChild(honeypot);
+
+enquiryForm.addEventListener("submit", async e => {
   e.preventDefault();
-  const f=new FormData(e.target);
 
-  const body=`Name: ${f.get("name")}\nEmail: ${f.get("email")}\nNeed: ${f.get("type")}\n\n${f.get("msg")}`;
+  if (honeypot.value) return;
 
-  location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Website enquiry: "+f.get("type"))}&body=${encodeURIComponent(body)}`;
+  const originalButtonText = enquiryButton.textContent;
+  enquiryButton.disabled = true;
+  enquiryButton.textContent = "Sending...";
+  enquiryStatus.textContent = "Please wait while we send your enquiry.";
 
-  document.getElementById("status").textContent="Your email app should open with the enquiry ready to send.";
+  const fields = new FormData(enquiryForm);
+  const payload = {
+    name: fields.get("name"),
+    email: fields.get("email"),
+    type: fields.get("type"),
+    message: fields.get("msg"),
+    _replyto: fields.get("email"),
+    _subject: "New Gritory Digital Website Enquiry",
+    _template: "table",
+    _honey: fields.get("_honey"),
+    _url: "https://gritorydigital-pixel.github.io/gritory-digital-website/"
+  };
+
+  try {
+    const response = await fetch("https://formsubmit.co/ajax/gritory.digital@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.success === false || result.success === "false") {
+      throw new Error(result.message || "FormSubmit could not accept the enquiry.");
+    }
+
+    enquiryStatus.textContent = "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.";
+    enquiryForm.reset();
+  } catch (error) {
+    console.error("Enquiry submission error:", error);
+    enquiryStatus.textContent = "Sorry, we couldn't send your enquiry. Please try again or email gritory.digital@gmail.com.";
+  } finally {
+    enquiryButton.disabled = false;
+    enquiryButton.textContent = originalButtonText;
+  }
 });
 
 /* ---- Hero 3D: a website built from layered wireframe panels ---- */
