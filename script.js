@@ -70,19 +70,8 @@ const enquiryForm = document.getElementById("form");
 const enquiryStatus = document.getElementById("status");
 const enquiryButton = enquiryForm.querySelector('button[type="submit"]');
 
-/* Hidden honeypot for basic bot submissions. */
-const honeypot = document.createElement("input");
-honeypot.type = "text";
-honeypot.name = "_honey";
-honeypot.tabIndex = -1;
-honeypot.autocomplete = "off";
-honeypot.setAttribute("aria-hidden", "true");
-honeypot.style.display = "none";
-enquiryForm.appendChild(honeypot);
-
 enquiryForm.addEventListener("submit", async e => {
   e.preventDefault();
-  if (honeypot.value) return;
 
   const originalButtonText = enquiryButton.textContent;
   enquiryButton.disabled = true;
@@ -97,9 +86,7 @@ enquiryForm.addEventListener("submit", async e => {
     message: fields.get("msg"),
     _replyto: fields.get("email"),
     _subject: "New Gritory Digital Website Enquiry",
-    _template: "table",
-    _honey: "",
-    _url: "https://gritorydigital-pixel.github.io/gritory-digital-website/"
+    _template: "table"
   };
 
   try {
@@ -112,23 +99,18 @@ enquiryForm.addEventListener("submit", async e => {
       body: JSON.stringify(payload)
     });
 
-    const responseText = await response.text();
-    let result;
-    try {
-      result = JSON.parse(responseText);
-    } catch {
-      throw new Error("Form service returned an unexpected response (HTTP " + response.status + ").");
-    }
+    const result = await response.json();
 
-    if (!response.ok || result.success === false || result.success === "false") {
-      throw new Error(result.message || result.error || ("Form service returned HTTP " + response.status + "."));
+    /* FormSubmit may return HTTP 200 even when success is false. */
+    if (String(result.success) !== "true") {
+      throw new Error(result.message || "FormSubmit did not accept the enquiry.");
     }
 
     enquiryStatus.textContent = "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.";
     enquiryForm.reset();
   } catch (error) {
     console.error("Gritory Digital form submission failed:", error);
-    const detail = error && error.message ? error.message : "Unknown network error";
+    const detail = error && error.message ? error.message : "Network or service error";
     enquiryStatus.textContent = "We couldn't send your enquiry (" + detail + "). Please try again or email gritory.digital@gmail.com.";
   } finally {
     enquiryButton.disabled = false;
