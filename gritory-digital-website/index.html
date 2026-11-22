@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gritory Digital | Website Design & Development Studio</title>
+<meta name="description" content="Gritory Digital designs and builds professional websites that help your business look credible, reach customers and grow online.">
+<meta name="theme-color" content="#0f0a2b">
+<meta property="og:title" content="Gritory Digital | Website Design & Development Studio">
+<meta property="og:description" content="A better website. A stronger first impression.">
+<meta property="og:image" content="assets/og-image.jpg">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a class="logo" href="#top" aria-label="Gritory Digital home"><img src="assets/logo-light.png" alt="Gritory Digital" width="157" height="29"></a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <nav id="menu">
+    <a href="#services">Services</a><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#care">Maintenance</a>
+    <a class="btn small" href="#contact">Get a quote</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>A better website.<br>A stronger first impression.</h1>
+      <p class="lead">Professional websites designed to help your business look credible, reach customers and grow online.</p>
+      <div class="cta"><a class="btn" href="#contact">Start your project</a><a class="btn ghost" href="#pricing">See starting prices</a></div>
+      <p class="hint">Move your cursor or scroll. The site above is drawn live in 3D.</p>
+    </div>
+  </section>
+
+  <section id="services" class="wrap">
+    <h2>Everything your website needs, from one small studio</h2>
+    <div class="grid">
+      <article class="card tilt"><h3>Landing pages</h3><p>One focused page for a product, service or campaign, built to bring in enquiries.</p></article>
+      <article class="card tilt"><h3>Business websites</h3><p>Clear, credible sites for startups, service providers and growing companies.</p></article>
+      <article class="card tilt"><h3>Portfolio websites</h3><p>A polished home for the work and experience of freelancers, creators and consultants.</p></article>
+      <article class="card tilt"><h3>Website redesign</h3><p>A modern look, better structure and a smoother experience on every screen size.</p></article>
+      <article class="card tilt"><h3>E-commerce</h3><p>Online stores with product catalogues, carts, payments and order management.</p></article>
+      <article class="card tilt"><h3>Setup and care</h3><p>Domain, hosting, SSL, business email, migration, and monthly maintenance.</p></article>
+    </div>
+  </section>
+
+  <section id="process" class="wrap">
+    <h2>How a project runs</h2>
+    <ol class="steps">
+      <li><b>Discover your needs</b><span>We learn about your business, audience and goals.</span></li>
+      <li><b>Agree scope and price</b><span>You get written scope, deliverables, timeline and cost before work starts.</span></li>
+      <li><b>Design and build</b><span>We shape the structure and visuals, then build and test every feature.</span></li>
+      <li><b>Review</b><span>You see a preview, send consolidated feedback and we apply agreed revisions.</span></li>
+      <li><b>Launch and handover</b><span>We go live, test the live site and hand over access. You own your domain and hosting.</span></li>
+    </ol>
+  </section>
+
+  <section id="pricing" class="paper">
+    <div class="wrap">
+      <h2>Starting prices</h2>
+      <div class="toggle" role="group" aria-label="Currency">
+        <button data-r="in" class="on">India (₹)</button><button data-r="intl">International ($)</button>
+      </div>
+      <div id="plans" class="grid plans"></div>
+      <p class="note">These are starting prices. Your final quote depends on pages, features and requirements. Domain, hosting and other third-party costs are listed separately.</p>
+      <h3 class="sub">One-time add-ons <small>(service charge, India)</small></h3>
+      <ul class="addons">
+        <li>Domain setup <b>₹499</b></li><li>Hosting setup <b>₹999</b></li><li>Business email <b>₹999</b></li>
+        <li>Website migration <b>₹1,999</b></li><li>Basic SEO setup <b>₹1,999</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="care" class="wrap">
+    <h2>Monthly maintenance, after launch</h2>
+    <div class="grid care">
+      <article class="card"><h3>Basic</h3><p class="price">₹999<small>/month</small></p><ul><li>Website monitoring</li><li>Minor updates up to 30 minutes</li><li>Expiry reminders</li></ul></article>
+      <article class="card"><h3>Standard</h3><p class="price">₹1,999<small>/month</small></p><ul><li>Up to 2 hours of updates</li><li>Backup checks</li><li>Performance review</li></ul></article>
+      <article class="card"><h3>Premium</h3><p class="price">₹3,999<small>/month</small></p><ul><li>Up to 5 hours of updates</li><li>Content updates</li><li>Priority support</li></ul></article>
+    </div>
+    <p class="note">Maintenance is optional. Work beyond a plan's included time is scoped and quoted separately.</p>
+  </section>
+
+  <section id="contact" class="wrap contact">
+    <div>
+      <h2>Tell us about your business</h2>
+      <p class="lead">Share a few details and we will reply with questions or a tailored quote. We start by understanding your goals, not by picking a package.</p>
+    </div>
+    <form id="form">
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      <label>What do you need?
+        <select name="type"><option>Landing page</option><option>Business website</option><option>Portfolio website</option><option>Website redesign</option><option>E-commerce website</option><option>Not sure yet</option></select>
+      </label>
+      <label>About your project<textarea name="msg" rows="4" required></textarea></label>
+      <button class="btn" type="submit">Send enquiry</button>
+      <p class="note" id="status" role="status"></p>
+    </form>
+  </section>
+</main>
+
+<footer><img src="assets/logo-light.png" alt="Gritory Digital" width="119" height="22"><span>© <span id="yr"></span> Gritory Digital. Website design and development for India and international clients.</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
